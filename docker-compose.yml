@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: asiayo
+    container_name: asiayo
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./vendor:/var/www/vendor
+      - ./node_modules:/var/www/node_modules
+    networks:
+      - asiayo_network
+    ports:
+      - "8080:8080"
+
+networks:
+  asiayo_network:
+    driver: bridge
