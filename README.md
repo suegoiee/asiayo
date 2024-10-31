@@ -3,15 +3,15 @@
 **題目一：**
 
     ```bash
-        SELECT o.bnb_id AS bnb_id, b.name AS bnb_name, SUM(o.amount) AS may_amount
-        FROM  orders o
-        JOIN  bnbs b ON o.bnb_id = b.id
-        WHERE  o.currency = 'TWD' AND o.created_at BETWEEN '2023-05-01' AND '2023-05-31'
-        GROUP BY o.bnb_id, b.name
-        ORDER BY may_amount DESC
-        LIMIT 10;
+    SELECT o.bnb_id AS bnb_id, b.name AS bnb_name, SUM(o.amount) AS may_amount
+    FROM  orders o
+    JOIN  bnbs b ON o.bnb_id = b.id
+    WHERE  o.currency = 'TWD' AND o.created_at BETWEEN '2023-05-01' AND '2023-05-31'
+    GROUP BY o.bnb_id, b.name
+    ORDER BY may_amount DESC
+    LIMIT 10;
 
-**題目二**
+**題目二：**
     - 1. 假設是 orders 的資料過於龐大，我會先對 orders 做 partition table 然後以時間作為區分。然後對資料庫做基本的檢查：常被用於查詢的欄位有沒做 index，各欄位的型別是不是最佳的，有無做正規化，以及有無冗余資料。
     - 2. 假設肇因為高迸發，因為 mysql 在高壓時會有所競爭的瓶頸，這時候可能要考慮換 postgre 這類事務能力較強的資料庫。
     - 3. 設置 Redis 減少資料庫訪問，尤其這裡的表看起來變動的頻率不會很高，Redis 會有很大的發揮空間。
