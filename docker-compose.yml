@@ -13,11 +13,5 @@ services:
       - .:/var/www
       - ./vendor:/var/www/vendor
       - ./node_modules:/var/www/node_modules
-    networks:
-      - asiayo_network
     ports:
       - "8080:8080"
-
-networks:
-  asiayo_network:
-    driver: bridge
