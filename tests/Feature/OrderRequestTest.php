@@ -116,7 +116,7 @@ class OrderRequestTest extends TestCase
     }
 
     #[Test]
-    public function test_price_and_currency_for_usd()
+    public function test_price_and_currency_for_usd_fail()
     {
         $data = [
             'id' => 'A0000005',
@@ -136,7 +136,7 @@ class OrderRequestTest extends TestCase
     }
 
     #[Test]
-    public function test_price_and_currency_for_usd2()
+    public function test_price_and_currency_for_usd_success()
     {
         $data = [
             'id' => 'A0000005',
