@@ -37,7 +37,7 @@ class OrderRequest extends FormRequest
             ],
             'currency' => [
                 'required',
-                Rule::in(['TWD', 'USD']),
+                Rule::in(config("currency.list")),
             ],
             'address.city' => 'sometimes|string',
             'address.district' => 'sometimes|string',
@@ -71,14 +71,7 @@ class OrderRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        if ($this->input('currency') === 'USD') {
-            $convertedPrice = $this->input('price') * 31;
-
-            $this->merge([
-                'price' => $convertedPrice,
-                'currency' => 'TWD',
-            ]);
-        }
+        $this->currencyTrans();
     }
 
     protected function failedValidation(Validator $validator)
@@ -87,5 +80,17 @@ class OrderRequest extends FormRequest
             'status' => 400,
             'errors' => $validator->errors(),
         ], 400));
+    }
+
+    private function currencyTrans()
+    {
+        if (config("currency.prices.".$this->input('currency')) !== null) {
+            $convertedPrice = $this->input('price') * config("currency.prices.".$this->input('currency'));
+
+            $this->merge([
+                'price' => $convertedPrice,
+                'currency' => 'TWD',
+            ]);
+        }
     }
 }
