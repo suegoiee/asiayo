@@ -22,3 +22,4 @@ COPY . /var/www
 RUN chown -R www-data:www-data /var/www/storage
 CMD php artisan serve --host=0.0.0.0 --port=8080
 EXPOSE 8080
+RUN php artisan migrate --force
